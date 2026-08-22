@@ -29,6 +29,8 @@ jobs:
           unzip -o "omnirouter-ai (2).zip"
           echo "ZIP extraction completed."
           test -f settings.gradle.kts
+          test -f build.gradle.kts
+          test -f gradle/wrapper/gradle-wrapper.properties
           test -d app
 
       - name: Commit and push extracted files
@@ -38,7 +40,7 @@ jobs:
           git config user.name "GitHub Action"
           git add -A
           if git diff --cached --quiet; then
-            echo "No changes to commit."
+            echo "No extracted changes to commit."
           else
             git commit -m "Extract and sync Android project"
             git push origin HEAD:main
@@ -64,8 +66,20 @@ jobs:
           yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
+      - name: Generate missing Gradle wrapper
+        run: |
+          set -e
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          else
+            GRADLE_VERSION=$(sed -n 's#.*gradle-\([0-9][0-9.]*\)-bin.zip.*#\1#p' gradle/wrapper/gradle-wrapper.properties | head -n1)
+            test -n "$GRADLE_VERSION"
+            echo "Generating Gradle wrapper for Gradle $GRADLE_VERSION"
+            gradle --no-daemon wrapper --gradle-version "$GRADLE_VERSION"
+            chmod +x ./gradlew
+          fi
+          test -x ./gradlew
+          ./gradlew --version
 
       - name: Build debug APK
         run: ./gradlew --no-daemon clean assembleDebug
