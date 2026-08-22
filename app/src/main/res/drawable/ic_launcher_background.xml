@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="108"
+                android:endY="108"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#0F172A" />
+                <item android:offset="0.5" android:color="#1E1B4B" />
+                <item android:offset="1.0" android:color="#31104B" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Subtle Neural Mesh Lines -->
+    <path
+        android:pathData="M18,36 L54,18 L90,36 L90,72 L54,90 L18,72 Z"
+        android:strokeColor="#2563EB"
+        android:strokeAlpha="0.35"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M54,18 L54,90 M18,36 L90,72 M90,36 L18,72"
+        android:strokeColor="#8B5CF6"
+        android:strokeAlpha="0.25"
+        android:strokeWidth="1"
+        android:fillColor="#00000000" />
+</vector>

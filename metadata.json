@@ -1,0 +1,6 @@
+{
+  "name": "OmniRouter AI",
+  "description": "Intelligent multi-provider AI model router and orchestrator connecting OpenRouter, OpenAI, Claude, Gemini, and local models with automated workload-based routing and change logging.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
