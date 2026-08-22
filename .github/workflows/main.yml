@@ -10,6 +10,7 @@ permissions:
 
 env:
   ANDROID_HOME: /usr/local/lib/android/sdk
+  JAVA_TOOL_OPTIONS: -Djava.awt.headless=true
 
 jobs:
   extract-and-build:
@@ -32,6 +33,13 @@ jobs:
           test -f build.gradle.kts
           test -f gradle/wrapper/gradle-wrapper.properties
           test -d app
+
+      - name: Pin CI-safe KSP version
+        run: |
+          set -e
+          test -f gradle/libs.versions.toml
+          sed -i 's/googleDevtoolsKsp = "2\.3\.5"/googleDevtoolsKsp = "2.3.6"/' gradle/libs.versions.toml
+          grep 'googleDevtoolsKsp' gradle/libs.versions.toml
 
       - name: Commit and push extracted files
         run: |
@@ -82,7 +90,7 @@ jobs:
           ./gradlew --version
 
       - name: Build debug APK
-        run: ./gradlew --no-daemon clean assembleDebug
+        run: ./gradlew --no-daemon clean assembleDebug --stacktrace --no-parallel
 
       - name: Verify APK
         run: |
