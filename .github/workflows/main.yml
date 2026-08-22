@@ -1,0 +1,32 @@
+name: Extract ZIP File
+
+on:
+  workflow_dispatch:
+
+jobs:
+  extract-zip:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Extract ZIP file
+        run: |
+          # Find and extract the zip file
+          unzip -o "omnirouter-ai (2).zip"
+          
+          # List extracted contents
+          echo "✅ ZIP file extracted successfully!"
+          ls -la
+      
+      - name: Commit and push extracted files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          git add -A
+          git commit -m "Extract omnirouter-ai (2).zip" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
