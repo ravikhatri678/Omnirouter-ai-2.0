@@ -50,7 +50,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No extracted changes to commit."
           else
-            git commit -m "Extract and sync Android project"
+            git commit -m "Extract and sync Android project [skip ci]"
             git push origin HEAD:main
           fi
 
@@ -60,8 +60,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle
+      - name: Set up Gradle 9.3.1
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.3.1'
 
       - name: Install Android SDK packages
         run: |
